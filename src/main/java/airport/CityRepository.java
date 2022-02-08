@@ -6,13 +6,13 @@ import java.util.List;
 
 import static airport.DatabaseConfig.*;
 
-public class PlaneRepository implements AutoCloseable {
+public class CityRepository implements AutoCloseable {
 
 
     private Connection connection;
 
 
-    public PlaneRepository() {
+    public CityRepository() {
         try {
             this.connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         } catch (SQLException e) {
@@ -28,11 +28,12 @@ public class PlaneRepository implements AutoCloseable {
     }
 
 
-    public void initPlaneTable() {
-        String sql = "CREATE TABLE plane (" +
+    public void initCityTable() {
+        String sql = "CREATE TABLE city (" +
                 "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                "serial_number VARCHAR(100) NOT NULL, " +
-                "number_of_seats INT NOT NULL)";
+                "name VARCHAR(100) NOT NULL, " +
+                "longitude DOUBLE NOT NULL), " +
+                "latitude DOUBLE NOT NULL)";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
         } catch (SQLException e) {
@@ -40,12 +41,13 @@ public class PlaneRepository implements AutoCloseable {
         }
     }
 
-    public void createPlane(Plane newPlane) {
+    public void createCity(City newCity) {
 
-        String sql = "INSERT INTO plane (serial_number, number_of_seats) VALUES (?, ?)";
+        String sql = "INSERT INTO city (name, longitude, latitude) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, newPlane.getSerialNumber());
-            preparedStatement.setInt(2, newPlane.getNumberOfSeats());
+            preparedStatement.setString(1, newCity.getName());
+            preparedStatement.setDouble(2, newCity.getLongitude());
+            preparedStatement.setDouble(3, newCity.getLatitude());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -53,47 +55,48 @@ public class PlaneRepository implements AutoCloseable {
         }
     }
 
-    public Plane findPlaneById(int id) {
-        Plane plane = null;
+    public City findCityById(int id) {
+        City city = null;
 
-        String sql = "SELECT serial_number, number_of_seats FROM plane WHERE id = ?";
+        String sql = "SELECT name, longitude, latitude FROM city WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                plane = new Plane(
+                city = new City(
                         id,
-                        resultSet.getString("serial_number"),
-                        resultSet.getInt("number_of_seats"));
+                        resultSet.getString("name"),
+                        resultSet.getDouble("longitude"),
+                        resultSet.getDouble("latitude"));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return plane;
+        return city;
     }
 
-    public List<Plane> listAllPlanes() {
-        List<Plane> planeList = new ArrayList<>();
-        String sql = "SELECT id, serial_number, number_of_seats FROM plane";
+    public List<City> listAllCities() {
+        List<City> cityList = new ArrayList<>();
+        String sql = "SELECT id, name, longitude, latitude FROM city";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                planeList.add(new Plane(
+                cityList.add(new City(
                         resultSet.getInt("id"),
-                        resultSet.getString("serial_number"),
-                        resultSet.getInt("number_of_seats")));
+                        resultSet.getString("name"),
+                        resultSet.getDouble("longitude"),
+                        resultSet.getDouble("latitude")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return planeList;
+        return cityList;
     }
 
 }
