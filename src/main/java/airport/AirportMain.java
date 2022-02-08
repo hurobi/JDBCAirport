@@ -1,6 +1,6 @@
 package airport;
 
-public class airportMain {
+public class AirportMain {
     /**
      * 1. Hozd létre az alábbi osztályokat:
      * <p>
