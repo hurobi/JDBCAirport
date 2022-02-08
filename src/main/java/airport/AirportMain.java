@@ -42,6 +42,8 @@ public class AirportMain {
 
         try (PlaneRepository planeRepository = new PlaneRepository(); CityRepository cityRepository = new CityRepository()){
             AirportUI airportUI = new AirportUI(planeRepository, cityRepository);
+            planeRepository.initPlaneTable();
+            cityRepository.initCityTable();
             airportUI.menu();
 
         } catch (Exception e) {

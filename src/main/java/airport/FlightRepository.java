@@ -6,13 +6,13 @@ import java.util.List;
 
 import static airport.DatabaseConfig.*;
 
-public class CityRepository implements AutoCloseable {
+public class FlightRepository implements AutoCloseable {
 
 
     private Connection connection;
 
 
-    public CityRepository() {
+    public FlightRepository() {
         try {
             this.connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         } catch (SQLException e) {
@@ -28,12 +28,12 @@ public class CityRepository implements AutoCloseable {
     }
 
 
-    public void initCityTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS city (" +
+    public void initFlightTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS flight (" +
                 "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                "name VARCHAR(100) NOT NULL, " +
-                "longitude DOUBLE NOT NULL, " +
-                "latitude DOUBLE NOT NULL)";
+                "plane_id INT NOT NULL, " +
+                "city_from_id INT NOT NULL, " +
+                "city_to_id INT NOT NULL)";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
         } catch (SQLException e) {
@@ -41,7 +41,7 @@ public class CityRepository implements AutoCloseable {
         }
     }
 
-    public void createCity(City newCity) {
+    public void createFlight(Flight newFlight) {
 
         String sql = "INSERT INTO city (name, longitude, latitude) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -100,3 +100,7 @@ public class CityRepository implements AutoCloseable {
     }
 
 }
+
+
+
+

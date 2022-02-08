@@ -29,7 +29,7 @@ public class PlaneRepository implements AutoCloseable {
 
 
     public void initPlaneTable() {
-        String sql = "CREATE TABLE plane (" +
+        String sql = "CREATE TABLE IF NOT EXISTS plane (" +
                 "id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "serial_number VARCHAR(100) NOT NULL, " +
                 "number_of_seats INT NOT NULL)";
