@@ -16,22 +16,44 @@ public class AirportUI {
     }
 
     public void menu() {
-        System.out.println("1. repülőgépet felvenni az adatbázisba");
-        System.out.println("2. repülőgépet keresni az adatbázisból id alapján");
-        System.out.println("3. kilistázni az összes repülőgépet");
-        System.out.println("4. várost felvenni az adatbázisba");
-        System.out.println("5. várost keresni id alapján");
-        System.out.println("6. kilistázni az összes várost");
-//            Minden azonos változó kijelölése ALT +J
-        while (!inputConsole.hasNextInt()) {
-//                System.out.println("Input is not a number.");
-            inputConsole.nextLine();
-        }
-        int number = inputConsole.nextInt();
 
-        switch (inputConsole)
-        case 1:
-        addPlane();
+        boolean exited = false;
+        while (!exited) {
+
+            System.out.println("1. repülőgépet felvenni az adatbázisba");
+            System.out.println("2. repülőgépet keresni az adatbázisból id alapján");
+            System.out.println("3. kilistázni az összes repülőgépet");
+            System.out.println("4. várost felvenni az adatbázisba");
+            System.out.println("5. várost keresni id alapján");
+            System.out.println("6. kilistázni az összes várost");
+            System.out.println("9. Kilépés");
+
+//            Minden azonos változó kijelölése ALT +J
+            int number = Integer.parseInt(inputConsole.nextLine());
+
+            switch (number) {
+                case 1:
+                    addPlane();
+                    break;
+                case 2:
+                    findPlane();
+                    break;
+                case 3:
+                    listAllPlane();
+                    break;
+                case 4:
+                    addCity();
+                    break;
+                case 5:
+                    findCity();
+                    break;
+                case 6:
+                    listAllCity();
+                    break;
+                case 9:
+                    exited = true;
+            }
+        }
     }
 
     public void addPlane() {

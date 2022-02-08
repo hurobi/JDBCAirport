@@ -39,7 +39,14 @@ public class AirportMain {
      * (új járat felvétele, keresés ID alapján (adja vissza a flight ID-t, a repülő jőáratszámát, a várost ahová és ahonnan jön).
      */
     public static void main(String[] args) {
-        AirportUI.menu();
+
+        try (PlaneRepository planeRepository = new PlaneRepository(); CityRepository cityRepository = new CityRepository()){
+            AirportUI airportUI = new AirportUI(planeRepository, cityRepository);
+            airportUI.menu();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
