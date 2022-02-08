@@ -39,7 +39,7 @@ public class AirportMain {
      * (új járat felvétele, keresés ID alapján (adja vissza a flight ID-t, a repülő jőáratszámát, a várost ahová és ahonnan jön).
      */
     public static void main(String[] args) {
-        Airport.menu();
+        AirportUI.menu();
     }
 
 }

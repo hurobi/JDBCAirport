@@ -14,6 +14,11 @@ public class Plane {
         this.numberOfSeats = numberOfSeats;
     }
 
+    public Plane(String serialNumber, int numberOfSeats) {
+        this.serialNumber = serialNumber;
+        this.numberOfSeats = numberOfSeats;
+    }
+
 
 
     public int getId() {
@@ -38,5 +43,14 @@ public class Plane {
 
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
+    }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "id=" + id +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                '}';
     }
 }
