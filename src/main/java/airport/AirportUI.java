@@ -36,11 +36,9 @@ public class AirportUI {
 
     public void addPlane() {
         System.out.println("Írd be az új repülőgép serial number-jét!");
-        inputConsole.nextLine();
         String serialNumber = inputConsole.nextLine();
 
         System.out.println("Írd be az új repülőgép ülésszámát!");
-        inputConsole.nextLine();
         int numberOfSeats = Integer.parseInt(inputConsole.nextLine());
 
         Plane plane = new Plane(serialNumber, numberOfSeats);
@@ -54,17 +52,37 @@ public class AirportUI {
         System.out.println(plane);
     }
 
-    public void listAllPlane(String listAllPlane) {
+    public void listAllPlane() {
         List<Plane> allPlane = planeRepository.listAllPlanes();
         allPlane.forEach(System.out::println);
 
     }
 
-    public static void addNewCity(String addNewCity) {
-        //TODO
+
+    public void addCity() {
+        System.out.println("Írd be az új város nevét!");
+        String name = inputConsole.nextLine();
+
+        System.out.println("Írd be az új város hosszósági koordinátáját!");
+        double longitude = Double.parseDouble(inputConsole.nextLine());
+
+        System.out.println("Írd be az új város hosszósági koordinátáját!");
+        double latitude = Double.parseDouble(inputConsole.nextLine());
+
+        City city = new City(name, longitude, latitude);
+        cityRepository.createCity(city);
     }
 
-    public static void findId(String addNewCity) {
-        //TODO
+    public void findCity() {
+        System.out.println("Kérem a repülőgép id-jét!");
+        int id = Integer.parseInt(inputConsole.nextLine());
+        City city = cityRepository.findCityById(id);
+        System.out.println(city);
+    }
+
+    public void listAllCity() {
+        List<City> allCity = cityRepository.listAllCities();
+        allCity.forEach(System.out::println);
+
     }
 }
